@@ -19,15 +19,20 @@ class Node {
 }
 
 class operations {
+
 	Node head;
 	Node tail;
 
-	/* method to push the data inside the list */
 	public Node pushData(int data) {
+
 		Node newnode = new Node(data);
 		if (head == null) {
 			head = newnode;
+			tail = newnode;
 		} else {
+			/*
+			 * swapping the value to get the new node address
+			 */
 			Node temp = head;
 			this.head = newnode;
 			newnode.next = temp;
@@ -47,7 +52,7 @@ class operations {
 		}
 	}
 
-	/* created method to append and pop the element present inside the list */
+	/* created append method to append the element. */
 	public void append(int data) {
 		Node newnode = new Node(data);
 		if (head == null) {
@@ -59,14 +64,25 @@ class operations {
 		}
 	}
 
+	/* insert element between the nodes */
 	public void inBetweenInsert(Node previousNode, Node newNode) {
 		Node tempNode = previousNode.next;
 		previousNode.next = newNode;
 		newNode.next = tempNode;
 	}
 
+	/* pop method to delete the element */
 	public void pop() {
 		this.head = this.head.next;
+	}
+
+	public void deleteEnd() {
+		Node tempNode = head;
+		while (!tempNode.next.equals(tail)) {
+			tempNode = tempNode.next;
+		}
+		this.tail = tempNode;
+		tempNode.next = null;
 	}
 }
 
@@ -104,8 +120,16 @@ class LinkList {
 		System.out.println("\nafter deleting first element: ");
 		link.print();
 	}
+
+	public void deleteLastNode() {
+		addDataStart();
+		link.deleteEnd();
+		System.out.println("\nafter deleting last element: ");
+		link.print();
+	}
 }
 
+/* created the object of class */
 public class Linked_List {
 	public static void main(String[] args) {
 		LinkList obj = new LinkList();
@@ -115,7 +139,8 @@ public class Linked_List {
 		System.out.println("Press 1 to add data at start");
 		System.out.println("Press 2 to add data at end");
 		System.out.println("Press 3 to insert data in between");
-		System.out.println("Press 4 to delete first node");
+		System.out.println("Press 4 to delete first element");
+		System.out.println("Press 5 to delete last element");
 		int input = sc.nextInt();
 		switch (input) {
 		case 1:
@@ -129,6 +154,9 @@ public class Linked_List {
 			break;
 		case 4:
 			obj.deleteFirstNode();
+			break;
+		case 5:
+			obj.deleteLastNode();
 			break;
 		default:
 			System.out.println("Invalid Choice");
